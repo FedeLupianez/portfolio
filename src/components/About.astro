@@ -1,5 +1,12 @@
 ---
-import { siteConfig } from "../config";
+import { getSiteConfig, type Locale } from "../i18n";
+
+interface Props {
+    lang: Locale;
+}
+
+const { lang } = Astro.props;
+const siteConfig = getSiteConfig(lang);
 ---
 
 <section id="about" class="p-8 sm:p-12 md:p-16 lg:p-24">
@@ -9,7 +16,7 @@ import { siteConfig } from "../config";
         <h2
           class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-100"
         >
-          About Me
+          {siteConfig.ui.sections.aboutMe}
         </h2>
         <div
           class="w-[75px] h-[5px] mt-2 rounded-full bg-[var(--accent-color)]"

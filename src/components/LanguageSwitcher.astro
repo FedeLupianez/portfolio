@@ -1,0 +1,68 @@
+---
+import { getSiteConfig, localePath, locales, localeNames, type Locale } from "../i18n";
+
+interface Props {
+    lang: Locale;
+}
+
+const { lang } = Astro.props;
+const config = getSiteConfig(lang);
+---
+
+<div
+  id="lang-toggle"
+  class="fixed top-5 right-[5.25rem] z-50 flex h-10 items-center rounded-full bg-neutral-100 p-0.5 text-xs font-medium shadow-sm transition-colors duration-300 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+>
+  {
+    locales.map((l) => (
+      <a
+        href={localePath(l)}
+        hreflang={l}
+        lang={l}
+        data-lang={l}
+        aria-current={l === lang ? "true" : undefined}
+        aria-label={`${config.ui.a11y.language}: ${localeNames[l]}`}
+        class="lang-option px-2.5 py-1.5 rounded-full transition-colors duration-300"
+      >
+        {l.toUpperCase()}
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .lang-option {
+    color: inherit;
+  }
+
+  #lang-toggle {
+    color: #44403c;
+  }
+
+  :global(.dark) #lang-toggle {
+    color: #d4d4d4;
+  }
+
+  #lang-toggle .lang-option[aria-current="true"] {
+    background-color: var(--accent-color);
+    color: white;
+  }
+
+  :global(.dark) #lang-toggle .lang-option[aria-current="true"] {
+    color: #171717;
+  }
+</style>
+
+<script>
+  document
+    .getElementById("lang-toggle")
+    ?.querySelectorAll<HTMLAnchorElement>(".lang-option")
+    .forEach((link) => {
+      link.addEventListener("click", () => {
+        try {
+          const lang = link.dataset.lang;
+          if (lang) localStorage.setItem("lang", lang);
+        } catch (e) {}
+      });
+    });
+</script>

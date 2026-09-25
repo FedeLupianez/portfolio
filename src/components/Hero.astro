@@ -1,5 +1,13 @@
 ---
-import { siteConfig } from "../config";
+import { formatText, getSiteConfig, type Locale } from "../i18n";
+
+interface Props {
+    lang: Locale;
+}
+
+const { lang } = Astro.props;
+const siteConfig = getSiteConfig(lang);
+const profileAlt = formatText(siteConfig.ui.a11y.profileAlt, { name: siteConfig.name });
 ---
 
 <div
@@ -131,12 +139,12 @@ import { siteConfig } from "../config";
               <h2
                       class="text-pretty text-xl sm:text-2xl md:text-5xl font-bold tracking-tight text-neutral-500 animate-fade-in dark:text-neutral-300"
                       >
-                      Hello!
+                      {siteConfig.ui.hero.hello}
               </h2>
               <h1
                       class="text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-neutral-500 animate-fade-in animation-delay-200 dark:text-neutral-300"
                       >
-                      I'm <span class="text-[var(--accent-color)]"
+                      {siteConfig.ui.hero.im} <span class="text-[var(--accent-color)]"
                       >{siteConfig.name}</span
                   >
               </h1>
@@ -144,7 +152,7 @@ import { siteConfig } from "../config";
         {siteConfig.profileImage && (
           <img
             src={siteConfig.profileImage}
-            alt={`Profile picture of ${siteConfig.name}`}
+            alt={profileAlt}
             class="h-52 w-52 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-80 lg:w-80 rounded-full object-cover animate-fade-in animation-delay-200"
           />
         )}
@@ -163,7 +171,7 @@ import { siteConfig } from "../config";
       siteConfig.social?.email && (
         <a
           href={`mailto:${siteConfig.social.email}`}
-          aria-label="Email"
+          aria-label={siteConfig.ui.a11y.email}
           class="transition-colors duration-300 hover:text-[var(--accent-color)] link"
         >
           <svg

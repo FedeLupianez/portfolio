@@ -1,5 +1,12 @@
 ---
-import { siteConfig } from "../config";
+import { getSiteConfig, type Locale } from "../i18n";
+
+interface Props {
+    lang: Locale;
+}
+
+const { lang } = Astro.props;
+const siteConfig = getSiteConfig(lang);
 
 const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
 const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
@@ -21,7 +28,7 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
         <div class="flex gap-x-6">
           <a
             href={`mailto:${siteConfig.social.email}`}
-            aria-label="Email"
+            aria-label={siteConfig.ui.a11y.email}
             class="text-gray-600 transition-colors duration-300 hover:text-[var(--accent-color)] dark:text-gray-400"
           >
             <svg
@@ -122,7 +129,7 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
           <a
             href="#about"
             class="text-sm text-gray-600 hover:text-gray-800 transition-colors dark:text-gray-400 dark:hover:text-gray-200"
-            >About</a
+            >{siteConfig.ui.nav.about}</a
           >
           {
             hasProjects && (
@@ -130,7 +137,7 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
                 href="#projects"
                 class="text-sm text-gray-600 hover:text-gray-800 transition-colors dark:text-gray-400 dark:hover:text-gray-200"
               >
-                Projects
+                {siteConfig.ui.nav.projects}
               </a>
             )
           }
@@ -140,7 +147,7 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
                 href="#experience"
                 class="text-sm text-gray-600 hover:text-gray-800 transition-colors dark:text-gray-400 dark:hover:text-gray-200"
               >
-                Experience
+                {siteConfig.ui.nav.experience}
               </a>
             )
           }
@@ -150,14 +157,14 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
                 href="#education"
                 class="text-sm text-gray-600 hover:text-gray-800 transition-colors dark:text-gray-400 dark:hover:text-gray-200"
               >
-                Education
+                {siteConfig.ui.nav.education}
               </a>
             )
           }
         </nav>
         <p class="text-sm text-gray-500">
           © {new Date().getFullYear()}
-          {siteConfig.name}. All rights reserved.
+          {siteConfig.name}. {siteConfig.ui.footer.allRightsReserved}
         </p>
       </div>
     </div>

@@ -1,0 +1,92 @@
+---
+import { getSiteConfig, localePath, locales, localeNames, type Locale } from "../i18n";
+import "../styles/global.css";
+
+interface Props {
+    lang: Locale;
+}
+
+const { lang } = Astro.props;
+const config = getSiteConfig(lang);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={config.description} />
+    {
+      Astro.site && (
+        <>
+          {locales.map((l) => (
+            <link rel="alternate" hreflang={l} href={new URL(localePath(l), Astro.site).href} />
+          ))}
+          <link
+            rel="alternate"
+            hreflang="x-default"
+            href={new URL(localePath(defaultLocale), Astro.site).href}
+          />
+          <link
+            rel="canonical"
+            href={new URL(localePath(lang), Astro.site ?? Astro.url).href}
+          />
+        </>
+      )
+    }
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{config.name} - {config.title}</title>
+    <script
+      is:inline
+      define:vars={{
+        accentColor: config.accentColor,
+        darkAccentColor: config.darkAccentColor,
+        localeUrls: Object.fromEntries(locales.map((l) => [l, localePath(l)])),
+        currentLocale: lang,
+        browserLocales: locales as readonly string[],
+      }}
+    >
+      (function () {
+        var theme = null;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch (e) {}
+        var useDark =
+          theme === "dark" ||
+          (!theme &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        var root = document.documentElement;
+        if (useDark) {
+          root.classList.add("dark");
+        }
+        root.style.setProperty(
+          "--accent-color",
+          useDark ? darkAccentColor : accentColor
+        );
+
+        // Primera visita: respetamos el idioma del navegador.
+        try {
+          if (!localStorage.getItem("lang")) {
+            var browserLang = (navigator.language || "").slice(0, 2).toLowerCase();
+            if (
+              browserLang !== currentLocale &&
+              browserLocales.indexOf(browserLang) !== -1
+            ) {
+              window.location.replace(localeUrls[browserLang]);
+            }
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body class="bg-black" data-lang={lang}>
+    <slot />
+  </body>
+</html>

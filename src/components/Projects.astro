@@ -1,5 +1,12 @@
 ---
-import { siteConfig } from "../config";
+import { getSiteConfig, type Locale } from "../i18n";
+
+interface Props {
+    lang: Locale;
+}
+
+const { lang } = Astro.props;
+const siteConfig = getSiteConfig(lang);
 const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
 ---
 
@@ -10,7 +17,7 @@ const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           <div class="lg:col-span-4">
             <h2 class="text-3xl sm:text-4xl md:text-5xl xl:text-7xl font-bold text-gray-100">
-              Projects
+              {siteConfig.ui.sections.projects}
             </h2>
             <div
               class="w-[75px] h-[5px] mt-2 rounded-full bg-[var(--accent-color)]"

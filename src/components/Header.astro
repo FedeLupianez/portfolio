@@ -1,5 +1,13 @@
 ---
-import { siteConfig } from "../config";
+import { getSiteConfig, type Locale } from "../i18n";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+
+interface Props {
+    lang: Locale;
+}
+
+const { lang } = Astro.props;
+const siteConfig = getSiteConfig(lang);
 
 const hasProjects = siteConfig.projects && siteConfig.projects.length > 0;
 const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
@@ -17,7 +25,7 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
           href="#about"
           class="text-gray-700 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white"
         >
-          About
+          {siteConfig.ui.nav.about}
         </a>
       </li>
       {
@@ -27,7 +35,7 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
               href="#projects"
               class="text-gray-700 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white"
             >
-              Projects
+              {siteConfig.ui.nav.projects}
             </a>
           </li>
         )
@@ -39,7 +47,7 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
               href="#experience"
               class="text-gray-700 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white"
             >
-              Experience
+              {siteConfig.ui.nav.experience}
             </a>
           </li>
         )
@@ -51,7 +59,7 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
               href="#education"
               class="text-gray-700 hover:text-black transition-colors font-medium dark:text-gray-300 dark:hover:text-white"
             >
-              Education
+              {siteConfig.ui.nav.education}
             </a>
           </li>
         )
@@ -60,10 +68,12 @@ const hasEducation = siteConfig.education && siteConfig.education.length > 0;
   </nav>
 </header>
 
+<LanguageSwitcher {lang} />
+
 <button
   id="theme-toggle"
   type="button"
-  aria-label="Toggle color theme"
+  aria-label={siteConfig.ui.a11y.toggleTheme}
   class="fixed top-5 right-5 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-700 shadow-sm transition-colors duration-300 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700 cursor-pointer"
 >
   <svg
