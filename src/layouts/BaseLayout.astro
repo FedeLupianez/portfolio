@@ -58,10 +58,8 @@ const config = getSiteConfig(lang);
         try {
           theme = localStorage.getItem("theme");
         } catch (e) {}
-        var useDark =
-          theme === "dark" ||
-          (!theme &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        // El tema oscuro es el principal: solo se usa el claro si fue elegido.
+        var useDark = theme !== "light";
         var root = document.documentElement;
         if (useDark) {
           root.classList.add("dark");

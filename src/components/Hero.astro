@@ -18,7 +18,7 @@ const profileAlt = formatText(siteConfig.ui.a11y.profileAlt, { name: siteConfig.
   <div class="absolute inset-0 -z-10 hero-gradient"></div>
   <svg
     aria-hidden="true"
-    class="absolute inset-0 -z-10 size-full bg-neutral-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] dark:stroke-neutral-800"
+    class="absolute inset-0 -z-10 size-full stroke-neutral-300 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] dark:stroke-neutral-800"
   >
     <defs>
       <pattern
@@ -125,7 +125,7 @@ const profileAlt = formatText(siteConfig.ui.a11y.profileAlt, { name: siteConfig.
       fill="url(#programming-symbols)"
       width="100%"
       height="100%"
-      opacity="0.2"></rect>
+      class="opacity-15 dark:opacity-30"></rect>
     <rect
       fill="url(#0787a7c5-978c-4f66-83c7-11c213f99cb7)"
       width="100%"
@@ -135,30 +135,39 @@ const profileAlt = formatText(siteConfig.ui.a11y.profileAlt, { name: siteConfig.
   <div class="h-full mx-auto p-8 sm:p-12 md:p-24 flex items-center">
     <div>
       <div class=" flex flex-wrap items-center gap-10 sm:gap-10 md:gap-40 w-full">
-          <div class="flex flex-wrap items-start justify-center flex-col gap-15">
+          <div class="flex flex-wrap items-start justify-center flex-col gap-6">
               <h2
-                      class="text-pretty text-xl sm:text-2xl md:text-5xl font-bold tracking-tight text-neutral-500 animate-fade-in dark:text-neutral-300"
+                      class="text-pretty text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-[var(--accent-color)] animate-fade-in"
                       >
                       {siteConfig.ui.hero.hello}
               </h2>
               <h1
-                      class="text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-neutral-500 animate-fade-in animation-delay-200 dark:text-neutral-300"
+                      class="text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-neutral-800 animate-fade-in animation-delay-200 dark:text-gray-100"
                       >
                       {siteConfig.ui.hero.im} <span class="text-[var(--accent-color)]"
                       >{siteConfig.name}</span
                   >
               </h1>
+              <div
+                class="w-[75px] h-[5px] rounded-full bg-[var(--accent-color)] animate-fade-in animation-delay-200"
+              />
           </div>
         {siteConfig.profileImage && (
-          <img
-            src={siteConfig.profileImage}
-            alt={profileAlt}
-            class="h-52 w-52 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-80 lg:w-80 rounded-full object-cover animate-fade-in animation-delay-200"
-          />
+          <div class="relative animate-fade-in animation-delay-200">
+            <div
+              aria-hidden="true"
+              class="absolute -inset-6 -z-10 rounded-full bg-[var(--accent-color)] opacity-20 blur-3xl"
+            />
+            <img
+              src={siteConfig.profileImage}
+              alt={profileAlt}
+              class="h-52 w-52 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-80 lg:w-80 rounded-full object-cover ring-2 ring-[var(--accent-color)] ring-offset-4 ring-offset-neutral-200 dark:ring-offset-neutral-950"
+            />
+          </div>
         )}
       </div>
       <p
-        class="text-pretty text-base sm:text-lg md:text-xl/8 font-medium text-neutral-900 animate-fade-in animation-delay-400 dark:text-neutral-100"
+        class="text-pretty text-base sm:text-lg md:text-xl/8 font-medium text-neutral-600 animate-fade-in animation-delay-400 dark:text-neutral-300"
       >
         {siteConfig.title}
       </p>
@@ -291,25 +300,21 @@ const profileAlt = formatText(siteConfig.ui.a11y.profileAlt, { name: siteConfig.
 <style>
   .hero-gradient {
     background: radial-gradient(
-      ellipse 800px 1200px at 0% 0%,
-      color-mix(in srgb, var(--accent-color) 40%, transparent) 0%,
-      color-mix(in srgb, var(--accent-color) 25%, transparent) 20%,
-      color-mix(in srgb, var(--accent-color) 10%, transparent) 40%,
-      rgba(255, 255, 255, 0.3) 70%,
-      rgba(255, 255, 255, 0.8) 90%,
-      white 100%
+      ellipse 900px 1300px at 10% 0%,
+      color-mix(in srgb, var(--accent-color) 45%, transparent) 0%,
+      color-mix(in srgb, var(--accent-color) 22%, transparent) 22%,
+      color-mix(in srgb, var(--accent-color) 9%, transparent) 45%,
+      transparent 75%
     );
   }
 
   :where(.dark) .hero-gradient {
     background: radial-gradient(
-      ellipse 800px 1200px at 0% 0%,
-      color-mix(in srgb, var(--accent-color) 40%, transparent) 0%,
-      color-mix(in srgb, var(--accent-color) 25%, transparent) 20%,
-      color-mix(in srgb, var(--accent-color) 10%, transparent) 40%,
-      rgba(0, 0, 0, 0.3) 70%,
-      rgba(0, 0, 0, 0.8) 90%,
-      black 100%
+      ellipse 1000px 1400px at 8% 0%,
+      color-mix(in srgb, var(--accent-color) 35%, transparent) 0%,
+      color-mix(in srgb, var(--accent-color) 16%, transparent) 25%,
+      color-mix(in srgb, var(--accent-color) 6%, transparent) 50%,
+      transparent 80%
     );
   }
 

@@ -15,18 +15,27 @@ export function isLocale(value: unknown): value is Locale {
     return typeof value === "string" && (locales as readonly string[]).includes(value);
 }
 
+/**
+ * Combina, por índice, la estructura de `shared` con la traducción.
+ * Si un item existe solo en uno de los dos, se conserva igual.
+ */
 function mergeList<TBase extends object, TText extends object>(
     base: TBase[],
     text: (Partial<TText> & object)[] = []
-): (TBase & Required<TText>)[] {
-    return base.map((item, index) => {
-        const translated = (text[index] ?? {}) as TText;
-        const merged = { ...item } as TBase & TText;
-        for (const [key, value] of Object.entries(translated)) {
-            if (value === undefined) continue;
-            (merged as Record<string, unknown>)[key] = value;
+): (Partial<TBase> & Partial<TText>)[] {
+    const length = Math.max(base.length, text.length);
+
+    return Array.from({ length }, (_, index) => {
+        const merged: Record<string, unknown> = {
+            ...(base[index] ?? {}),
+            ...(text[index] ?? {}),
+        };
+
+        for (const key of Object.keys(merged)) {
+            if (merged[key] === undefined) delete merged[key];
         }
-        return merged as TBase & Required<TText>;
+
+        return merged as Partial<TBase> & Partial<TText>;
     });
 }
 

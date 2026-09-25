@@ -28,7 +28,7 @@ export const shared = {
         twitter: "https://x.com/Fedee_ilup",
         github: "https://github.com/FedeLupianez",
     },
-    skills: ["Nestjs", "Python", "Svelte", "Docker", "C"],
+    skills: ["Nestjs", "Python", "Svelte", "Docker", "Linux", "C"],
 
     projects: [
         {
@@ -269,7 +269,9 @@ export type Translations = {
 };
 
 /* Configuración final que reciben los componentes: shared + traducciones
-   resueltas (todos los campos obligatorios y ya combinados). */
+   resueltas. Todos los campos de cada item son opcionales a propósito:
+   poné cada dato donde corresponda (shared si no cambia de idioma,
+   translations si se traduce) y lo que falte simplemente no se muestra. */
 export type SiteConfig = {
     name: string;
     accentColor: string;
@@ -280,18 +282,23 @@ export type SiteConfig = {
     title: string;
     description: string;
     aboutMe: string;
-    projects: { name: string; description: string; link: string; skills: string[] }[];
+    projects: {
+        name?: string;
+        description?: string;
+        link?: string;
+        skills?: string[];
+    }[];
     experience: {
-        company: string;
-        title: string;
-        dateRange: string;
-        bullets: string[];
+        company?: string;
+        title?: string;
+        dateRange?: string;
+        bullets?: string[];
     }[];
     education: {
-        school: string;
-        degree: string;
-        dateRange: string;
-        achievements: string[];
+        school?: string;
+        degree?: string;
+        dateRange?: string;
+        achievements?: string[];
     }[];
     ui: UiStrings;
 };

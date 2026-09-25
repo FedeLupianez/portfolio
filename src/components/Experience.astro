@@ -42,22 +42,29 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
                   <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 sm:p-5 md:p-6 hover:shadow-md transition-shadow duration-300 dark:bg-neutral-900 dark:border-neutral-800">
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                       <div>
-                        <h3 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
-                          {exp.title}
-                        </h3>
-                        <p
-                          class="text-base sm:text-lg text-[var(--accent-color)]"
-                        >
-                          {exp.company}
-                        </p>
+                        {exp.title && (
+                          <h3 class="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">
+                            {exp.title}
+                          </h3>
+                        )}
+                        {exp.company && (
+                          <p
+                            class="text-base sm:text-lg text-[var(--accent-color)]"
+                          >
+                            {exp.company}
+                          </p>
+                        )}
                       </div>
-                      <span class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-0 dark:text-gray-400">
-                        {exp.dateRange}
-                      </span>
+                      {exp.dateRange && (
+                        <span class="text-xs sm:text-sm text-gray-500 mt-2 sm:mt-0 dark:text-gray-400">
+                          {exp.dateRange}
+                        </span>
+                      )}
                     </div>
 
+                    {(exp.bullets?.length ?? 0) > 0 && (
                     <ul class="space-y-2">
-                      {exp.bullets.map((bullet) => (
+                      {exp.bullets?.map((bullet) => (
                         <li class="flex items-start">
                           <span class="inline-block w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 mr-3 flex-shrink-0 dark:bg-neutral-600" />
                           <span class="text-sm sm:text-base text-gray-600 dark:text-gray-400">
@@ -66,6 +73,7 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
                         </li>
                       ))}
                     </ul>
+                    )}
                   </div>
                 </div>
               ))}
