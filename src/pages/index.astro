@@ -24,8 +24,31 @@ import "../styles/global.css";
       rel="stylesheet"
     />
     <title>{siteConfig.name} - {siteConfig.title}</title>
+    <script
+      is:inline
+      define:vars={{ accentColor: siteConfig.accentColor, darkAccentColor: siteConfig.darkAccentColor }}
+    >
+      (function () {
+        var theme = null;
+        try {
+          theme = localStorage.getItem("theme");
+        } catch (e) {}
+        var useDark =
+          theme === "dark" ||
+          (!theme &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        var root = document.documentElement;
+        if (useDark) {
+          root.classList.add("dark");
+        }
+        root.style.setProperty(
+          "--accent-color",
+          useDark ? darkAccentColor : accentColor
+        );
+      })();
+    </script>
   </head>
-  <body>
+  <body class="bg-black">
     <Header />
     <section>
       <Hero />

@@ -4,18 +4,13 @@ import { siteConfig } from "../config";
 
 <div
   id="hero"
-  class="relative isolate overflow-hidden bg-white py-24 md:h-screen"
-  style={`--accent-color: ${siteConfig.accentColor}`}
+  class="relative isolate overflow-hidden bg-neutral-200 py-24 md:h-screen dark:bg-neutral-950"
 >
   <!-- Gradient overlay -->
-  <div
-    class="absolute inset-0 -z-10"
-    style={`background: radial-gradient(ellipse 800px 1200px at 0% 0%, ${siteConfig.accentColor}40 0%, ${siteConfig.accentColor}25 20%, ${siteConfig.accentColor}10 40%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0.8) 90%, white 100%)`}
-  >
-  </div>
+  <div class="absolute inset-0 -z-10 hero-gradient"></div>
   <svg
     aria-hidden="true"
-    class="absolute inset-0 -z-10 size-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+    class="absolute inset-0 -z-10 size-full bg-neutral-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)] dark:stroke-neutral-800"
   >
     <defs>
       <pattern
@@ -39,7 +34,7 @@ import { siteConfig } from "../config";
         <text
           x="50"
           y="50"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="24"
           transform="rotate(-15)">&lt;/&gt;</text
@@ -47,7 +42,7 @@ import { siteConfig } from "../config";
         <text
           x="150"
           y="100"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="20"
           transform="rotate(10)">{}</text
@@ -55,7 +50,7 @@ import { siteConfig } from "../config";
         <text
           x="250"
           y="80"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="18"
           transform="rotate(-5)">=&gt;</text
@@ -63,7 +58,7 @@ import { siteConfig } from "../config";
         <text
           x="100"
           y="200"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="22"
           transform="rotate(15)">[]</text
@@ -71,7 +66,7 @@ import { siteConfig } from "../config";
         <text
           x="300"
           y="180"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="20"
           transform="rotate(-10)">&lt;&gt;</text
@@ -79,7 +74,7 @@ import { siteConfig } from "../config";
         <text
           x="200"
           y="250"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="24"
           transform="rotate(5)">()</text
@@ -87,7 +82,7 @@ import { siteConfig } from "../config";
         <text
           x="50"
           y="320"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="18"
           transform="rotate(-8)">::</text
@@ -95,7 +90,7 @@ import { siteConfig } from "../config";
         <text
           x="350"
           y="300"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="22"
           transform="rotate(12)">==</text
@@ -103,7 +98,7 @@ import { siteConfig } from "../config";
         <text
           x="150"
           y="350"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="20"
           transform="rotate(-15)">++</text
@@ -111,7 +106,7 @@ import { siteConfig } from "../config";
         <text
           x="250"
           y="370"
-          fill={siteConfig.accentColor}
+          fill="var(--accent-color)"
           font-family="monospace"
           font-size="24"
           transform="rotate(8)">;</text
@@ -131,34 +126,45 @@ import { siteConfig } from "../config";
   </svg>
   <div class="h-full mx-auto p-8 sm:p-12 md:p-24 flex items-center">
     <div>
-      <h2
-        class="text-pretty text-xl sm:text-2xl md:text-5xl font-bold tracking-tight text-gray-700 animate-fade-in"
-      >
-        Hello! 👋
-      </h2>
-      <h1
-        class="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 animate-fade-in animation-delay-200"
-      >
-        I'm <span style={{ color: siteConfig.accentColor }}
-          >{siteConfig.name}</span
-        >
-      </h1>
+      <div class=" flex flex-wrap items-center gap-10 sm:gap-10 md:gap-40 w-full">
+          <div class="flex flex-wrap items-start justify-center flex-col gap-15">
+              <h2
+                      class="text-pretty text-xl sm:text-2xl md:text-5xl font-bold tracking-tight text-neutral-500 animate-fade-in dark:text-neutral-300"
+                      >
+                      Hello!
+              </h2>
+              <h1
+                      class="text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-neutral-500 animate-fade-in animation-delay-200 dark:text-neutral-300"
+                      >
+                      I'm <span class="text-[var(--accent-color)]"
+                      >{siteConfig.name}</span
+                  >
+              </h1>
+          </div>
+        {siteConfig.profileImage && (
+          <img
+            src={siteConfig.profileImage}
+            alt={`Profile picture of ${siteConfig.name}`}
+            class="h-52 w-52 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-80 lg:w-80 rounded-full object-cover animate-fade-in animation-delay-200"
+          />
+        )}
+      </div>
       <p
-        class="mt-4 sm:mt-6 md:mt-8 text-pretty text-base sm:text-lg md:text-xl/8 font-medium text-gray-600 animate-fade-in animation-delay-400"
+        class="text-pretty text-base sm:text-lg md:text-xl/8 font-medium text-neutral-900 animate-fade-in animation-delay-400 dark:text-neutral-100"
       >
         {siteConfig.title}
       </p>
     </div>
   </div>
   <div
-    class="absolute bottom-0 left-0 right-0 p-8 sm:p-12 md:p-24 flex gap-x-4 sm:gap-x-6 md:gap-x-8 text-gray-700 animate-fade-in animation-delay-600"
+    class="absolute bottom-0 left-0 right-0 p-8 sm:p-12 md:p-24 flex gap-x-4 sm:gap-x-6 md:gap-x-8 text-gray-700 animate-fade-in animation-delay-600 dark:text-gray-300"
   >
     {
       siteConfig.social?.email && (
         <a
           href={`mailto:${siteConfig.social.email}`}
           aria-label="Email"
-          class="transition-colors duration-300 hover:text-[var(--accent-color)]"
+          class="transition-colors duration-300 hover:text-[var(--accent-color)] link"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -186,7 +192,7 @@ import { siteConfig } from "../config";
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
-          class="transition-colors duration-300 hover:text-[var(--accent-color)]"
+          class="transition-colors duration-300 hover:text-[var(--accent-color)] link"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -219,7 +225,7 @@ import { siteConfig } from "../config";
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Twitter"
-          class="transition-colors duration-300 hover:text-[var(--accent-color)]"
+          class="transition-colors duration-300 hover:text-[var(--accent-color)] link"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -249,7 +255,7 @@ import { siteConfig } from "../config";
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub"
-          class="transition-colors duration-300 hover:text-[var(--accent-color)]"
+          class="transition-colors duration-300 hover:text-[var(--accent-color)] link"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -275,6 +281,30 @@ import { siteConfig } from "../config";
 </div>
 
 <style>
+  .hero-gradient {
+    background: radial-gradient(
+      ellipse 800px 1200px at 0% 0%,
+      color-mix(in srgb, var(--accent-color) 40%, transparent) 0%,
+      color-mix(in srgb, var(--accent-color) 25%, transparent) 20%,
+      color-mix(in srgb, var(--accent-color) 10%, transparent) 40%,
+      rgba(255, 255, 255, 0.3) 70%,
+      rgba(255, 255, 255, 0.8) 90%,
+      white 100%
+    );
+  }
+
+  :where(.dark) .hero-gradient {
+    background: radial-gradient(
+      ellipse 800px 1200px at 0% 0%,
+      color-mix(in srgb, var(--accent-color) 40%, transparent) 0%,
+      color-mix(in srgb, var(--accent-color) 25%, transparent) 20%,
+      color-mix(in srgb, var(--accent-color) 10%, transparent) 40%,
+      rgba(0, 0, 0, 0.3) 70%,
+      rgba(0, 0, 0, 0.8) 90%,
+      black 100%
+    );
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -284,6 +314,22 @@ import { siteConfig } from "../config";
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  .link {
+      border-radius: 100%;
+      padding: 4px;
+  }
+
+  .link:hover {
+      background-color: black;
+    color: white;
+
+  }
+
+  :where(.dark) .link:hover {
+    background-color: white;
+    color: black;
   }
 
   .animate-fade-in {
