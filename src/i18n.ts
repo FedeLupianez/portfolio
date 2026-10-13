@@ -39,6 +39,13 @@ function mergeList<TBase extends object, TText extends object>(
     });
 }
 
+/** Ruta de un asset de `public/` respetando el `base` de Astro (GitHub Pages). */
+export function assetPath(path: string): string {
+    const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+    const clean = path.replace(/^\//, "");
+    return `${base}/${clean}`;
+}
+
 /**
  * Devuelve la configuración del sitio para un idioma, combinando los datos
  * compartidos con las traducciones de ese idioma.
@@ -50,7 +57,7 @@ export function getSiteConfig(lang: Locale = defaultLocale): SiteConfig {
         name: shared.name,
         accentColor: shared.accentColor,
         darkAccentColor: shared.darkAccentColor,
-        profileImage: shared.profileImage,
+        profileImage: assetPath(shared.profileImage),
         social: shared.social,
         skills: shared.skills,
         title: t.title,
