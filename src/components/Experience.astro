@@ -1,5 +1,6 @@
 ---
 import { getSiteConfig, type Locale } from "../i18n";
+import Modal from "./Modal.astro";
 
 interface Props {
     lang: Locale;
@@ -39,7 +40,12 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
                   )}
 
                   {/* Experience card */}
-                  <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 sm:p-5 md:p-6 hover:shadow-md transition-shadow duration-300 dark:bg-neutral-900 dark:border-neutral-800">
+                  <button
+                    type="button"
+                    class="bg-white rounded-lg shadow-sm border border-gray-100 p-4 sm:p-5 md:p-6 hover:shadow-md transition-shadow duration-300 dark:bg-neutral-900 dark:border-neutral-800 w-full text-left focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] focus:ring-offset-2 dark:focus:ring-offset-neutral-900"
+                    onclick={`document.getElementById('modal-${index}')?.setAttribute('data-modal', 'open')`}
+                    aria-label={lang === 'es' ? `Ver detalles de ${exp.title || exp.company || 'experiencia'}` : `View details for ${exp.title || exp.company || 'experience'}`}
+                  >
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
                       <div>
                         {exp.title && (
@@ -74,8 +80,31 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
                       ))}
                     </ul>
                     )}
-                  </div>
+
+                    <div class="mt-4 flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+                      <span>{lang === 'es' ? 'Ver detalles' : 'View details'}</span>
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                      </svg>
+                    </div>
+                  </button>
                 </div>
+              ))}
+
+              {/* Modals */}
+              {siteConfig.experience.map((exp, index) => (
+                <Modal
+                  id={`modal-${index}`}
+                  lang={lang}
+                  title={exp.title}
+                  company={exp.company}
+                  dateRange={exp.dateRange}
+                  description={exp.description}
+                  roleDescription={exp.roleDescription}
+                  image={exp.image}
+                  bullets={exp.bullets}
+                />
               ))}
             </div>
           </div>
@@ -84,3 +113,16 @@ const hasExperience = siteConfig.experience && siteConfig.experience.length > 0;
     </section>
   )
 }
+
+<style>
+  /* Modal trigger button hover effect */
+  button:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Ensure cards look clickable */
+  button:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+  }
+</style>

@@ -32,7 +32,7 @@ export const shared = {
 
     projects: [
         {
-            link: "https://cecit-frontend.onrender.com",
+            link: "https://centrodecomercioag.com.ar/beneficios",
             skills: ["Svelte", "NestJS", "Vercel"],
         },
         {
@@ -87,6 +87,9 @@ export const translations = {
                     "Improve system performance and his operations",
                     "Mentored team of 4 junior developers",
                 ],
+                description: "Exclusive benefits platform for members of the Alta Gracia Chamber of Commerce, invited to present the platform at FEDECOM.",
+                roleDescription: "Designed and implemented the complete architecture for both Backend (NestJS) and Frontend (Svelte). Improved system performance and operations. Mentored a team of 4 junior developers.",
+                image: "/cecit_banner.png",
             },
         ],
 
@@ -166,6 +169,9 @@ export const translations = {
                     "Optimización del rendimiento y las operaciones del sistema",
                     "Mentoría y acompañamiento de un equipo de 4 desarrolladores junior",
                 ],
+                description: "Plataforma de beneficios exclusiva para socios del Centro de Comercio de Alta Gracia, siendo invitado a presentar la plataforma en FEDECOM.",
+                roleDescription: "Diseñé e implementé la arquitectura completa tanto del Backend (NestJS) como del Frontend (Svelte). Optimicé el rendimiento y las operaciones del sistema. Mentoreé a un equipo de 4 desarrolladores junior.",
+                image: "/cecit_banner.png",
             },
         ],
 
@@ -233,6 +239,9 @@ export type ExperienceText = {
     title?: string;
     dateRange?: string;
     bullets?: string[];
+    description?: string;
+    roleDescription?: string;
+    image?: string;
 };
 
 export type EducationText = {

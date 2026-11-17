@@ -158,11 +158,14 @@ const profileAlt = formatText(siteConfig.ui.a11y.profileAlt, { name: siteConfig.
               aria-hidden="true"
               class="absolute -inset-4 sm:-inset-6 -z-10 rounded-full bg-[var(--accent-color)] opacity-20 blur-3xl"
             />
-            <img
-              src={siteConfig.profileImage}
-              alt={profileAlt}
-              class="h-32 w-32 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-80 lg:w-80 rounded-full object-cover ring-2 ring-[var(--accent-color)] ring-offset-4 ring-offset-neutral-200 dark:ring-offset-neutral-950"
-            />
+            <picture>
+              <source srcset={siteConfig.profileImage.replace(/\.[^.]+$/, '.avif')} type="image/avif" />
+              <img
+                src={siteConfig.profileImage}
+                alt={profileAlt}
+                class="h-32 w-32 sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-80 lg:w-80 rounded-full object-cover ring-2 ring-[var(--accent-color)] ring-offset-4 ring-offset-neutral-200 dark:ring-offset-neutral-950"
+              />
+            </picture>
           </div>
         )}
       </div>

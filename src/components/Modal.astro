@@ -1,0 +1,167 @@
+---
+import type { Locale } from '../config';
+import { assetPath } from '../i18n';
+
+interface Props {
+    id: string;
+    lang: Locale;
+    title?: string;
+    company?: string;
+    dateRange?: string;
+    description?: string;
+    roleDescription?: string;
+    image?: string;
+    bullets?: string[];
+    children?: any;
+}
+
+const { id, lang, title, company, dateRange, description, roleDescription, image, bullets, children } = Astro.props;
+---
+
+<div
+  id={id}
+  class="fixed inset-0 z-50 flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300 pointer-events-none"
+  data-modal="closed"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby={`${id}-title`}
+>
+  <div
+    class="absolute inset-0 bg-black/50 backdrop-blur-sm modal-backdrop"
+    aria-hidden="true"
+    onclick={`document.getElementById('${id}').setAttribute('data-modal', 'closed')`}
+  />
+  <div class="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-white rounded-xl shadow-xl dark:bg-neutral-900 transform scale-95 transition-all duration-300">
+    {image && (
+      <div class="relative h-48 sm:h-64">
+        <picture>
+          <source srcset={assetPath(image.replace(/\.[^.]+$/, '.avif'))} type="image/avif" />
+          <img
+            src={assetPath(image)}
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+        </picture>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      </div>
+    )}
+    <div class="p-6 sm:p-8">
+      <div class="flex items-start justify-between mb-4">
+        <div>
+          {title && (
+            <h3 id={`${id}-title`} class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
+              {title}
+            </h3>
+          )}
+          {company && (
+            <p class="mt-1 text-lg text-[var(--accent-color)]">
+              {company}
+            </p>
+          )}
+          {dateRange && (
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+              {dateRange}
+            </p>
+          )}
+        </div>
+        <button
+          data-modal-close
+          class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors p-1"
+          aria-label={lang === 'es' ? 'Cerrar' : 'Close'}
+          onclick={`document.getElementById('${id}').setAttribute('data-modal', 'closed')`}
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="prose prose-gray dark:prose-invert max-w-none">
+        {description && (
+          <div class="mb-6">
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              {lang === 'es' ? 'Sobre el proyecto' : 'About the project'}
+            </h4>
+            <p class="text-gray-600 dark:text-gray-400">{description}</p>
+          </div>
+        )}
+
+        {roleDescription && (
+          <div class="mb-6">
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              {lang === 'es' ? 'Mi rol' : 'My role'}
+            </h4>
+            <p class="text-gray-600 dark:text-gray-400">{roleDescription}</p>
+          </div>
+        )}
+
+        {(bullets?.length ?? 0) > 0 && (
+          <div class="mb-6">
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+              {lang === 'es' ? 'Logros principales' : 'Key achievements'}
+            </h4>
+            <ul class="space-y-2">
+              {bullets?.map((bullet) => (
+                <li class="flex items-start">
+                  <span class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent-color)] mt-2 mr-3 flex-shrink-0" />
+                  <span class="text-gray-600 dark:text-gray-400">{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {children}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ id }}>
+  // Watch for data-modal attribute changes on this modal
+  const modal = document.getElementById(id);
+  if (modal) {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-modal') {
+          const isOpen = modal.getAttribute('data-modal') === 'open';
+          if (isOpen) {
+            modal.classList.remove('opacity-0', 'invisible', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'visible', 'pointer-events-auto');
+            modal.querySelector('div:last-of-type')?.classList.remove('scale-95');
+            modal.querySelector('div:last-of-type')?.classList.add('scale-100');
+            document.body.style.overflow = 'hidden';
+            // Focus close button for accessibility
+            const closeBtn = modal.querySelector('[data-modal-close]');
+            if (closeBtn) closeBtn.focus();
+          } else {
+            modal.classList.add('opacity-0', 'invisible', 'pointer-events-none');
+            modal.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
+            modal.querySelector('div:last-of-type')?.classList.add('scale-95');
+            modal.querySelector('div:last-of-type')?.classList.remove('scale-100');
+            document.body.style.overflow = '';
+          }
+        }
+      });
+    });
+    observer.observe(modal, { attributes: true });
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const openModal = document.querySelector('[data-modal="open"]');
+      if (openModal) {
+        openModal.setAttribute('data-modal', 'closed');
+      }
+    }
+  });
+</script>
+
+<style>
+  @media (max-width: 640px) {
+    .prose {
+      font-size: 0.9rem;
+    }
+  }
+</style>
