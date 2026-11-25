@@ -7,6 +7,6 @@ export default defineConfig({
     vite: {
         plugins: [tailwindcss()],
     },
-    site: 'https://fedelupianez.github.io',
-    base: '/portfolio'
+    site: 'https://fedelupianez.runs-on.dev',
+    base: '/'
 });
